@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#000">
+<title>T9 BlackGreen</title>
+<style>
+  body{background:#000;color:#00ff88;font-family:'Courier New',monospace;display:flex;flex-direction:column;align-items:center;padding:20px;min-height:100vh;margin:0}
+  h1{color:#00ff88;text-shadow:0 0 10px #00ff88}
+  textarea{width:90%;max-width:500px;height:120px;background:#111;color:#00ff88;border:2px solid #00ff88;border-radius:8px;padding:12px;font-size:16px}
+ .btns{margin:15px 0;display:flex;gap:10px}
+  button{background:#00ff88;color:#000;border:none;padding:12px 20px;font-weight:bold;border-radius:8px}
+  button:hover{background:#00cc66;box-shadow:0 0 15px #00ff88}
+  #output{width:90%;max-width:500px;min-height:80px;background:#111;border:2px dashed #00ff88;border-radius:8px;padding:12px;font-size:18px}
+</style>
+</head>
+<body>
+<h1>⚡ T9 BLACKGREEN ⚡</h1>
+<textarea id="input" placeholder="Type text to encode... or paste T9 code to decode"></textarea>
+<div class="btns">
+  <button onclick="encode()">ENCODE</button>
+  <button onclick="decode()">DECODE</button>
+  <button onclick="copy()">COPY</button>
+</div>
+<div id="output"></div>
+<script>
+const t9 = {'A':'2','B':'22','C':'222','D':'3','E':'33','F':'333','G':'4','H':'44','I':'444','J':'5','K':'55','L':'555','M':'6','N':'66','O':'666','P':'7','Q':'77','R':'777','S':'7777','T':'8','U':'88','V':'888','W':'9','X':'99','Y':'999','Z':'9999',' ':'0'};
+const reverse = {}; for(let k in t9) reverse[t9[k]] = k;
+function encode(){let t=document.getElementById('input').value.toUpperCase();let r=t.split(' ').map(w=>[...w].map(c=>t9[c]||'').join('')).join(' ');document.getElementById('output').innerText=r;}
+function decode(){let c=document.getElementById('input').value;let r=c.split(' ').map(w=>{let o='',i=0;while(i<w.length){for(let l=4;l>0;l--){let k=w.substr(i,l);if(reverse[k]){o+=reverse[k];i+=l;break;}}}return o;}).join(' ');document.getElementById('output').innerText=r.toLowerCase();}
+function copy(){navigator.clipboard.writeText(document.getElementById('output').innerText);alert('Copied!')}
+</script>
+</body>
+</html>
